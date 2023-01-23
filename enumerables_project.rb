@@ -69,10 +69,11 @@ class Array
         self.each_with_index do |ele, idx| #
             new_arr[idx][0] = ele
         end
-
+        # require "byebug"
+        # debugger
         args.each_with_index do |arg, arg_i|
-            arg.each_with_index do |sub_ele, sub_idx|
-                new_arr[sub_idx][arg_i + 1] = sub_ele
+            (0...self.length).each do |sub_idx|
+                new_arr[sub_idx][arg_i + 1] = arg[sub_idx]
             end
         end
 
@@ -85,6 +86,7 @@ end
 
 a = [ 4, 5, 6 ]
 b = [ 7, 8, 9 ]
+
 [1, 2, 3].my_zip(a, b) # => [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
 a.my_zip([1,2], [8])   # => [[4, 1, 8], [5, 2, nil], [6, nil, nil]]
 [1, 2].my_zip(a, b)    # => [[1, 4, 7], [2, 5, 8]]
