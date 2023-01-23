@@ -65,24 +65,33 @@ class Array
     end
 
     def my_zip(*args)
-        new_arr = Array.new(self.length) {Array.new(args.length + 1)}
-        self.each_with_index do |ele, idx|
-            args.each_with_index do |arg, arg_i|
-                arg.each_with_index do |sub_ele, sub_idx|
-                    if idx == sub_idx
-                        new_arr[idx] << ele
-                        new_arr[idx] << sub_ele
+        new_arr = Array.new(self.length) {Array.new(args.length + 1, nil)}
+        self.each_with_index do |ele, idx| #
+            new_arr[idx][0] = ele
+        end
 
-                end
-
-
-                
-
+        args.each_with_index do |arg, arg_i|
+            arg.each_with_index do |sub_ele, sub_idx|
+                new_arr[sub_idx][arg_i + 1] = sub_ele
             end
         end
+
+        new_arr
+
     end
 
 end
+
+
+a = [ 4, 5, 6 ]
+b = [ 7, 8, 9 ]
+[1, 2, 3].my_zip(a, b) # => [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
+a.my_zip([1,2], [8])   # => [[4, 1, 8], [5, 2, nil], [6, nil, nil]]
+[1, 2].my_zip(a, b)    # => [[1, 4, 7], [2, 5, 8]]
+
+c = [10, 11, 12]
+d = [13, 14, 15]
+[1, 2].my_zip(a, b, c, d)    # => [[1, 4, 7, 10, 13], [2, 5, 8, 11, 14]]
 
 # [1, 2, 3, [4, [5, 6]], [[[7]], 8]].my_flatten # => [1, 2, 3, 4, 5, 6, 7, 8]
 
