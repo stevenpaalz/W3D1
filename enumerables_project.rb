@@ -55,22 +55,36 @@ class Array
         return [self] if !self.is_a?(Array)
         results = []
         self.each do |ele|
-            if ele.is_a?
+            if ele.is_a?(Array)
                 results += ele.my_flatten
             else
                 results += [ele]
             end
-            
-
-
         end
-
         results
+    end
+
+    def my_zip(*args)
+        new_arr = Array.new(self.length) {Array.new(args.length + 1)}
+        self.each_with_index do |ele, idx|
+            args.each_with_index do |arg, arg_i|
+                arg.each_with_index do |sub_ele, sub_idx|
+                    if idx == sub_idx
+                        new_arr[idx] << ele
+                        new_arr[idx] << sub_ele
+
+                end
+
+
+                
+
+            end
+        end
     end
 
 end
 
-[1, 2, 3, [4, [5, 6]], [[[7]], 8]].my_flatten # => [1, 2, 3, 4, 5, 6, 7, 8]
+# [1, 2, 3, [4, [5, 6]], [[[7]], 8]].my_flatten # => [1, 2, 3, 4, 5, 6, 7, 8]
 
 
 
